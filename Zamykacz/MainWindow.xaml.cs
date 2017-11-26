@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
@@ -18,8 +19,6 @@ namespace Zamykacz
       {
          InitializeComponent();
       }
-
-   
 
       private void Cancel_Click(object sender, RoutedEventArgs e)
       {
@@ -45,21 +44,19 @@ namespace Zamykacz
                return;
             }
             CloseAtValueLabel.Content = CloseAtTimePicker.Value.Value.ToString("HH:mm:ss dd-MM-yyyy");
-            TimeSpan timeSpan = CloseAtTimePicker.Value.Value.Subtract(DateTime.Now);
-            CloseForValueLabel.Content = _time = new TimeSpan(timeSpan.Days, timeSpan.Hours, timeSpan.Minutes,
-               timeSpan.Seconds);
+            _time = CloseAtTimePicker.Value.Value.Subtract(DateTime.Now);
+            CloseForValueLabel.Content = _time.ToString("hh\\:mm\\:ss");
          }
          else if (CloseForTimePicker.Value != null)
          {
-            var timeToClose = DateTime.Now.Add(new TimeSpan(0,CloseForTimePicker.Value.Value.Hour, CloseForTimePicker.Value.Value.Minute, CloseForTimePicker.Value.Value.Second));
-            CloseAtValueLabel.Content = timeToClose.ToString("HH:mm:ss dd-MM-yyyy");
-            CloseForValueLabel.Content = _time = new TimeSpan(0, CloseForTimePicker.Value.Value.Hour, CloseForTimePicker.Value.Value.Minute, CloseForTimePicker.Value.Value.Second);
+            TimeSpan closeForTimeSpan = new TimeSpan(0, CloseForTimePicker.Value.Value.Hour,CloseForTimePicker.Value.Value.Minute, CloseForTimePicker.Value.Value.Second);
+            CloseAtValueLabel.Content = DateTime.Now.Add(closeForTimeSpan).ToString("HH:mm:ss dd-MM-yyyy");
+            CloseForValueLabel.Content = _time = closeForTimeSpan;
          }
          else if (_shortcutHour > 0)
          {
-            var timeToClose = DateTime.Now.AddHours(_shortcutHour);
-            CloseAtValueLabel.Content = timeToClose.ToString("HH:mm:ss dd-MM-yyyy");
-            CloseForValueLabel.Content = _time = new TimeSpan(0, _shortcutHour, 0,0);
+            CloseAtValueLabel.Content = DateTime.Now.AddHours(_shortcutHour).ToString("HH:mm:ss dd-MM-yyyy");
+            CloseForValueLabel.Content = _time = new TimeSpan(0, _shortcutHour, 0, 0);
          }
          PrepareLook();
          RunTimer();
@@ -157,12 +154,26 @@ namespace Zamykacz
       {
          _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
          {
-            if (_time == TimeSpan.Zero) _timer.Stop();
+            if (_time == TimeSpan.Zero)
+            {
+               _timer.Stop();
+               ShutdownSystem();
+            }
             _time = _time.Add(TimeSpan.FromSeconds(-1));
-            CloseForValueLabel.Content = _time;
+            CloseForValueLabel.Content = _time.ToString("hh\\:mm\\:ss"); 
          }, Application.Current.Dispatcher);
 
          _timer.Start();
+      }
+
+      private void ShutdownSystem()
+      {
+         var psi = new ProcessStartInfo("shutdown", "/s /t 0")
+         {
+            CreateNoWindow = true,
+            UseShellExecute = false
+         };
+         Process.Start(psi);
       }
    }
 }

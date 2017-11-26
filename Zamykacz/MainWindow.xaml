@@ -31,19 +31,21 @@
         <GroupBox Name="CancelGroupBox" BorderThickness="0"  Grid.Row="2" Grid.ColumnSpan="3" BorderBrush="{x:Null}" Visibility="Hidden">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60"  />
+                    <RowDefinition Height="90"  />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label  HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF5D5D5D" FontSize="16">Zamknięcie za:</Label>
-                <Label Name="CloseForValueLabel" Grid.Column="1" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20">04:34:04</Label>
-                <Label  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF5D5D5D" FontSize="16">Czas zamknięcia:</Label>
-                <Label Name="CloseAtValueLabel"  Grid.Column="3" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20">14:24:04</Label>
+                <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                    <Label HorizontalContentAlignment="Center" Foreground="#FF5D5D5D" FontSize="16">Zamknięcie za:</Label>
+                    <Label Name="CloseForValueLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20">04:34:04</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,20,0,0">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FF5D5D5D" FontSize="16">Czas zamknięcia:</Label>
+                    <Label Name="CloseAtValueLabel"  HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20">14:24:04 23-04-2017</Label>
+                </StackPanel>
                 <Button Grid.Row="1"  Name="Cancel" Grid.ColumnSpan="4" Content="ANULUJ" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="600" Background="White" Foreground="#FF46A1D6" BorderBrush="#FF46A1D6" FontSize="18" FontWeight="Bold" Click="Cancel_Click" />
 
             </Grid>
