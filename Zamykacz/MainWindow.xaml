@@ -6,7 +6,7 @@
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:Zamykacz"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="670">
+        Title="Zamykacz" Height="350" Width="670">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
