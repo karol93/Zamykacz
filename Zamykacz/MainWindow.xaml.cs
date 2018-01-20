@@ -168,7 +168,7 @@ namespace Zamykacz
 
       private void ShutdownSystem()
       {
-         var psi = new ProcessStartInfo("shutdown", "/s /t 0")
+         var psi = new ProcessStartInfo("shutdown", "/s /f /t 0")
          {
             CreateNoWindow = true,
             UseShellExecute = false
